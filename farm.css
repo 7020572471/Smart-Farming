@@ -1,0 +1,110 @@
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefdf9;
+      color: #1e1e1e;
+      padding-bottom: 50px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff7ec;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      color: #2f4f2f;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #2e7d32;
+    }
+
+    main {
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #264d2c;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: 2px solid #e0d9cd;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    
+ 
+.crop-card img {
+  max-width: 250px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+
+.crop-card-guide {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.crop-card{
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.crop-card {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+.crop-card {
+  color: #2980b9;
+  margin-top: 12px;
+}
+.crop-card ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+.crop-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.crop-card table, th, td {
+  border: 1px solid #ddd;
+}
+.crop-card th, td {
+  padding: 10px;
+  text-align: left;
+}
+.crop-card th {
+  background-color: #3498db;
+  color: white;
+}
