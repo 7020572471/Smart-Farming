@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Government Schemes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefdf9;
+      color: #1e1e1e;
+      padding-bottom: 50px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff7ec;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #007BFF;
+    }
+
+    main {
+      padding: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      background: #222;
+      padding: 10px 20px;
+    }
+
+    .topbar i {
+      font-size: 20px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+      background-color: #444;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .topbar span {
+      font-size: 18px;
+      color: #fefdf9;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      background: #333;
+      overflow-x: hidden;
+      padding-top: 10px;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .profile {
+      text-align: center;
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile h2 {
+      margin-top: 10px;
+      font-size: 22px;
+      color: #fefdf9;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .social-icons a {
+      background-color: #1e2a34;
+      padding: 8px;
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    nav li {
+      padding: 8px 20px;
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    nav li:hover {
+      color: #4fa3f7;
+    }
+
+    .nav-info {
+      font-size: 14px;
+      color: #ccc;
+      display: none;
+      padding-left: 15px;
+    }
+
+    .nav-info.show {
+      display: block;
+    }
+
+    .exit-btn {
+      margin: 10px 20px;
+      padding: 6px 12px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 50px;
+      font-size: 14px;
+      position: fixed;
+      right: 10px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .scheme-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: left;
+      transition: transform 0.2s;
+    }
+
+    .scheme-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .scheme-card h3 {
+      margin-top: 0;
+      color: #007BFF;
+    }
+
+    .scheme-card p {
+      font-size: 15px;
+      margin: 10px 0;
+    }
+
+    .scheme-card a {
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: 500;
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .scheme-card a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <i class="fas fa-bars" id="toggle-sidebar"></i>
+    <span id="welcome">Welcome, <p id="sidebarName"></p></span>
+  </div>
+
+  <header>
+    <div class="logo">
+       🏛️ <strong>Govt</strong><sup>10</sup>
+    </div>
+    <nav class="nav">
+      <a href="homepagefarm.html">Home</a>
+      <a href="Crop_Guide.html">Crop Guide</a>
+      <a href="Fertilizer_Tip.html">Fertilizer Tips</a>
+      <a href="farming _hardware.HTML">Farming Hardware</a>
+      <a href="Goverment_Stuff.html">Government Stuff</a>
+      <a href="crop_Quiz.html">Get Quizzical</a>
+    </nav>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <div class="profile">
+      <img id="sidebarProfileImg" src="https://via.placeholder.com/90" alt="Profile Image" />
+      <h2 id="sidebarName"></h2>
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-x-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-skype"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="toggleInfo(this)"><div><i class="fas fa-home"></i> Home</div><div class="nav-info">Welcome to homepage.</div></li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-user"></i> About</div>
+          <div class="nav-info"><p id="sidebarDetail"></p><p id="sidebarMail"></p><p id="dateOfBirth"></p><p id="sidebarDetail2"></p></div>
+        </li>
+        <li onclick="toggleInfo(this)"><div><i class="fas fa-file-alt"></i> Resume</div><div class="nav-info">Resume not available.</div></li>
+        <li onclick="toggleInfo(this)"><div><i class="fa fa-trophy" aria-hidden="true"></i> Score</div><div class="nav-info"><p id="scoreDisplay1">Score not available</p></div></li>
+        <li onclick="logout()"><div><i class="fas fa-sign-out-alt"></i> Logout</div></li>
+      </ul>
+    </nav>
+    <button class="exit-btn" id="exit-sidebar">Exit</button>
+  </div>
+
+  <main>
+    <h1>Government Support for Farmers</h1>
+    <div class="card-grid">
+        <div class="scheme-card">
+          <h3>1. PM-Kisan Samman Nidhi (PM-KISAN)</h3>
+          <p>Direct income support for small and marginal farmers.</p>
+          <ul>
+            <li>₹6,000 per year in 3 equal installments.</li>
+            <li>Funds transferred directly to the farmer’s bank account.</li>
+            <li>Over 12 crore farmers have benefited.</li>
+          </ul>
+          <a href="https://pmkisan.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>2. Pradhan Mantri Fasal Bima Yojana (PMFBY)</h3>
+          <p>Insurance coverage for crop loss due to natural calamities.</p>
+          <ul>
+            <li>2% premium for Kharif, 1.5% for Rabi crops.</li>
+            <li>Covers drought, floods, pests, etc.</li>
+            <li>Claim amount directly credited to farmer's account.</li>
+          </ul>
+          <a href="https://pmfby.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>3. Soil Health Card Scheme</h3>
+          <p>Promotes balanced use of fertilizers based on soil testing.</p>
+          <ul>
+            <li>Soil tested every 2 years.</li>
+            <li>Personalized nutrient report for optimal crop planning.</li>
+            <li>Reduces input cost and increases yield.</li>
+          </ul>
+          <a href="https://soilhealth.dac.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>4. Kisan Credit Card (KCC)</h3>
+          <p>Credit facility for crop production and allied activities.</p>
+          <ul>
+            <li>Loans up to ₹3 lakhs at interest as low as 4%.</li>
+            <li>For agriculture, animal husbandry, and fisheries.</li>
+            <li>Flexible repayment options.</li>
+          </ul>
+          <a href="https://www.pnbindia.in/kisan-credit-card.html" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>5. e-NAM (National Agriculture Market)</h3>
+          <p>Online trading platform for farmers across India.</p>
+          <ul>
+            <li>Integrated with 1,000+ mandis.</li>
+            <li>Real-time price discovery and transparency.</li>
+            <li>Eliminates middlemen, improves profits.</li>
+          </ul>
+          <a href="https://enam.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>6. Pradhan Mantri Krishi Sinchai Yojana (PMKSY)</h3>
+          <p>Improve water-use efficiency in agriculture.</p>
+          <ul>
+            <li>Subsidy for drip and sprinkler irrigation systems.</li>
+            <li>“Har Khet Ko Pani” – water to every field.</li>
+            <li>Focus on micro-irrigation and watershed development.</li>
+          </ul>
+          <a href="https://pmksy.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>7. Sub-Mission on Agricultural Mechanization (SMAM)</h3>
+          <p>Support for modern farming tools and machinery.</p>
+          <ul>
+            <li>Up to 80% subsidy on farm equipment.</li>
+            <li>Focus on small and marginal farmers.</li>
+            <li>Support for custom hiring centers.</li>
+          </ul>
+          <a href="https://agrimachinery.nic.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>8. Rashtriya Krishi Vikas Yojana (RKVY)</h3>
+          <p>Support for agricultural innovation and infrastructure.</p>
+          <ul>
+            <li>Funding for agri-startups and value chain development.</li>
+            <li>Focus on modern farming methods and training.</li>
+            <li>Flexible support for state-level priorities.</li>
+          </ul>
+          <a href="https://rkvy.nic.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+      
+        <div class="scheme-card">
+          <h3>9. National Mission on Sustainable Agriculture (NMSA)</h3>
+          <p>Promote climate-resilient and sustainable farming practices.</p>
+          <ul>
+            <li>Supports organic farming and rainwater harvesting.</li>
+            <li>Improves soil health and water-use efficiency.</li>
+            <li>Promotes agroforestry and climate-smart farming.</li>
+          </ul>
+          <a href="https://nmsa.dac.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+        <div class="scheme-card">
+          <h3>11. Integrated Development of Horticulture (MIDH)</h3>
+          <p>Promote holistic development of fruits, vegetables, spices, and flowers.</p>
+          <ul>
+            <li>Financial assistance for horticulture production and post-harvest management.</li>
+            <li>Support for nurseries, seed production, and organic farming.</li>
+            <li>Capacity building and market development initiatives.</li>
+          </ul>
+          <a href="https://www.apnikheti.com/en/pn/govt-schemes" target="_blank" class="learn-more">Learn more</a>
+        </div>
+        
+        <div class="scheme-card">
+          <h3>12. Market Intervention Scheme & Price Support Scheme (MIS-PSS)</h3>
+          <p>Protects farmers from distress sales and price crashes.</p>
+          <ul>
+            <li>Government procurement of perishable and price-sensitive crops.</li>
+            <li>Assures Minimum Support Price (MSP) for eligible crops.</li>
+            <li>Improves market stability and farmer income security.</li>
+          </ul>
+          <a href="https://organiser.org/2024/12/23/270429/bharat/national-farmers-day-a-tribute-to-bharats-annadatas/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+        
+        <div class="scheme-card">
+          <h3>10. Agri Infrastructure Fund</h3>
+          <p>Loan support for building rural post-harvest infrastructure.</p>
+          <ul>
+            <li>Interest subsidy on loans for warehouses and cold storage.</li>
+            <li>Open to farmers, FPOs, cooperatives, and agri-entrepreneurs.</li>
+            <li>Improves storage and market linkage opportunities.</li>
+          </ul>
+          <a href="https://agriinfra.dac.gov.in/" target="_blank" class="learn-more">Learn more</a>
+        </div>
+     
+    </div>
+  </main>
+
+  <script>
+    function loadUserData() {
+      const loggedIn = localStorage.getItem('loggedIn');
+      const detail = JSON.parse(localStorage.getItem('detail'));
+
+      if (loggedIn !== 'true' || !detail) {
+        alert("No user session found. Redirecting to login.");
+        window.location.href = "LoginRR.html";
+        return;
+      }
+
+      const fullName = "Hi " + detail.fname + " " + detail.lname;
+      document.getElementById('sidebarName').textContent = fullName;
+      document.getElementById('welcome').textContent = "Welcome, " + fullName;
+      document.getElementById('sidebarDetail').textContent = "Name: " + detail.fname + " " + detail.lname;
+      document.getElementById('sidebarMail').textContent = "Email ID: " + detail.email;
+      document.getElementById('dateOfBirth').textContent = "Date Of Birth: " + detail.dob;
+      document.getElementById('sidebarDetail2').textContent = "Mobile Number: " + detail.mobile;
+      document.getElementById('sidebarProfileImg').src = detail.profileImage || "https://via.placeholder.com/90";
+    }
+
+    document.getElementById("toggle-sidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.add("active");
+    });
+
+    document.getElementById("exit-sidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.remove("active");
+    });
+
+    function toggleInfo(listItem) {
+      const allInfo = document.querySelectorAll(".nav-info");
+      allInfo.forEach(info => {
+        if (info !== listItem.querySelector(".nav-info")) {
+          info.classList.remove("show");
+        }
+      });
+
+      const info = listItem.querySelector(".nav-info");
+      info.classList.toggle("show");
+    }
+
+    function logout() {
+      if (confirm("Do you want to log out?")) {
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('detail');
+        window.location.href = 'LoginRR.html';
+      } else {
+        alert("Continue your work.");
+      }
+    }
+
+    loadUserData();
+  </script>
+
+</body>
+</html>
