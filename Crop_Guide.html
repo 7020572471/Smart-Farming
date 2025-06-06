@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sidebar Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefdf9;
+      color: #1e1e1e;
+      padding-bottom: 50px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff7ec;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+ 
+    .nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #2e7d32;
+    }
+
+    main {
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      background: #222;
+      padding: 10px 20px;
+    }
+
+    .topbar i {
+      font-size: 20px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+      background-color: #444;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .topbar span {
+      font-size: 18px;
+      color: #fefdf9;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      z-index: 1;
+      background: #333;
+      overflow-x: hidden;
+      padding-top: 10px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+      transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .profile {
+      text-align: center;
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile h2 {
+      margin-top: 10px;
+      font-size: 22px;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .social-icons a {
+      background-color: #1e2a34;
+      padding: 8px;
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    nav li {
+      padding: 8px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    nav li:hover {
+      color: #4fa3f7;
+    }
+
+    .nav-info {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 0.5px;
+      display: none;
+      padding-left: 15px;
+      width: 100%;
+    }
+
+    .nav-info.show {
+      display: block;
+    }
+
+    .exit-btn {
+      margin: 10px 20px;
+      padding: 6px 12px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 50px;
+      font-size: 14px;
+      position: fixed;
+      right: 10px;
+    }
+
+    .content {
+      margin-left: 0;
+      padding: 30px;
+    }
+
+    .crop-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Default 1 card */
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .crop-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards from 768px up */
+  }
+}
+
+.search-box {
+      width: 95%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: 2px solid #e0d9cd;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .crop-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      display: flex;
+      padding: 36px;
+      align-items: flex-start;
+      gap: 16px;
+      transition: transform 0.2s;
+    }
+
+    .crop-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .crop-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .crop-card h2 {
+      margin: 0;
+      color: #1b3e20;
+    }
+
+    .crop-card p {
+      margin: 4px 0;
+    } 
+
+    .crop-card a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #2e7d32;
+  font-weight: 500;
+  text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top ka bar -->
+  <div class="topbar">
+    <i class="fas fa-ellipsis-v" id="toggle-sidebar"></i>
+    <span id="welcome">Welcome, <p id="sidebarName"></p></span>
+  </div>
+  <header>
+    <div class="logo">
+      🌱 <strong>Crop</strong><sup>4</sup>
+    </div>
+    <nav class="nav">
+      <a href="homepagefarm.html">Home</a>
+      <a href="Crop_Guide.html">Crop Guide</a>
+      <a href="Fertilizer_Tip.html">Fertilizer Tips</a>
+      <a href="farming _hardware.HTML">Farming Hardware</a>
+      <a href="Goverment_Stuff.html">Government Stuff</a>
+      <a href="crop_Quiz.html">Get Quizzical</a>
+      </nav>
+  </header> 
+
+  <!--  Sidebar ka data  -->
+  <div class="sidebar" id="sidebar">
+    <div class="profile">
+        <img id="sidebarProfileImg" src="https://via.placeholder.com/90" alt="Profile Image" />
+        <h2 id="sidebarName"></h2>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-x-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-skype"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <nav>
+      <ul>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-home"></i> Home</div>
+          <div class="nav-info">Welcome to the homepage section.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-user"></i> About</div>
+          <div class="nav-info"><p id="sidebarDetail"></p> <p id="sidebarMail"></p><p id="dateOfBirth"></p><p id="sidebarDetail2"></p></div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-file-alt"></i> Resume</div>
+          <div class="nav-info">Resumes are Not available.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fa fa-trophy" aria-hidden="true"></i> Score</div>
+          <div class="nav-info"><p id="scoreDisplay1" >Score not available</p><p id="scoreDisplay2" ></p><p id="scoreDisplay3" ></p><p id="scoreDisplay4" ></p></div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-cogs"></i> Services</div>
+          <div class="nav-info">These are the services I offer.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-layer-group"></i> Dropdown</div>
+          <div class="nav-info">Dropdown items go here.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-envelope"></i> Contact Details</div>
+          <div class="nav-info"><p id="sidebarMobile"></p> <p id="sidebarMail"></p><br>Get in touch via email or social.</div>
+        </li>
+        <li onclick="logout()">
+          <div><i class="fas fa-sign-out-alt"></i> Logout</div>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="exit-btn" id="exit-sidebar">Exit</button>
+  </div>
+  
+  <main class="content">
+    <h1>Crop Guide</h1>
+    <input type="text" placeholder="Search crops..." class="search-box" />
+
+    <div class="crop-container">
+      <div class="crop-card">
+        <img src="https://cdn.britannica.com/17/176517-050-6F2B774A/Pile-uncooked-rice-grains-Oryza-sativa.jpg" alt="Rice" />
+        <div>
+          <h2>Rice</h2>
+          <p><strong>Growing season:</strong> Kharif</p>
+          <p>Keep the soil flooded, let the rice party!</p>
+          <a href="Ricefarm.html">Learn more</a>
+        </div>
+      </div>
+    
+      <div class="crop-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3RHATUPsiPHDoc4imUWTQ3OXsRIOYZbNsMBZM_tIOnHxypoXxRYPToCdwDqOxINx-c9U&usqp=CAU" alt="Wheat" />
+        <div>
+          <h2>Wheat</h2>
+          <p><strong>Growing season:</strong> Rabi</p>
+          <p>Water moderately, don’t drown your wheat.</p>
+          <a href="wheatcrop.html">Learn more</a>
+        </div>
+      </div>
+    
+      <div class="crop-card">
+        <img src="https://seed2plant.in/cdn/shop/products/maizeseeds.jpg?v=1604034397" alt="Maize" />
+        <div>
+          <h2>Maize</h2>
+          <p><strong>Growing season:</strong> Kharif</p>
+          <p>Give those roots some air, don’t smother them!</p>
+          <a href="maizefarm.html">Learn more</a>
+        </div>
+      </div>
+    
+      <div class="crop-card">
+        <img src="https://e.saravanaonline.com/4853-large_default/soya-bean-seeds-500-gm.jpg" alt="Soybean" />
+        <div>
+          <h2>Soybean</h2>
+          <p><strong>Growing season:</strong> Kharif</p>
+          <p>Water enough to make ‘em happy, but not soggy</p>
+          <a href="soyafarm.html">Learn more</a>
+        </div>
+      </div>
+    
+      <div class="crop-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt4LL6JQxKfdgZ1awXRwl9ydkihyHFJ4ESZQ&s" alt="Bajra" />
+        <div>
+          <h2>Bajra</h2>
+          <p><strong>Growing season:</strong> Kharif</p>
+          <p>Thrives in dry conditions, drought? Bajra doesn't care!</p>
+          <a href="bajarafarm.html">Learn more</a>
+        </div>
+      </div>
+    
+      <div class="crop-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9-y3NIkbkDWGvnaR7c6m2bejtRyb837P3vA&s" alt="Cotton" />
+        <div>
+          <h2>Cotton</h2>
+          <p><strong>Growing season:</strong> Kharif</p>
+          <p>Needs warmth and sunshine—cotton loves the heat!</p>
+          <a href="cottonfarm.html">Learn more</a>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+
+
+  <script>
+    function loadUserData() {
+      const loggedIn = localStorage.getItem('loggedIn');
+      const detail = JSON.parse(localStorage.getItem('detail'));
+
+      if (loggedIn !== 'true' || !detail) {
+        alert("No user session found. Redirecting to login.");
+        window.location.href = "LoginRR.html";
+        return;
+      }
+
+      const fullName = "Hi " + detail.fname + " " + detail.lname;
+      const welcomeName = "Welcome, " + fullName;
+
+      document.getElementById('sidebarName').textContent = fullName;
+      document.getElementById('welcome').textContent = welcomeName;
+      document.getElementById('sidebarDetail').textContent = "Name: " + detail.fname + " " + detail.lname;
+      document.getElementById('sidebarDetail2').textContent = "Mobile Number : " + detail.mobile;
+      document.getElementById('dateOfBirth').textContent = "Date Of Birth : " + detail.dob;
+      document.getElementById('sidebarMail').textContent = "Email ID : " + detail.email;
+      document.getElementById('sidebarMobile').textContent = "Mobile Number : " + detail.mobile || "Not Provided";
+      document.getElementById('sidebarProfileImg').src = detail.profileImage || "https://via.placeholder.com/90";
+    }
+
+    // Sidebar toggle logic
+    document.getElementById("toggle-sidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.add("active");
+    });
+
+    document.getElementById("exit-sidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.remove("active");
+    });
+
+    // Toggle nav info
+    function toggleInfo(listItem) {
+      const allInfo = document.querySelectorAll(".nav-info");
+      allInfo.forEach(info => {
+        if (info !== listItem.querySelector(".nav-info")) {
+          info.classList.remove("show");
+        }
+      });
+
+      const info = listItem.querySelector(".nav-info");
+      info.classList.toggle("show");
+    }
+
+    function loadScores() {
+      for (let i = 1; i <= 4; i++) {
+        const score = localStorage.getItem('testScore' + i);
+        const scoreElement = document.getElementById('scoreDisplay' + i);
+        if (score !== null && scoreElement) {
+          scoreElement.textContent = `Last Test Score: ${score} out of 24`;
+        }
+      }
+    }
+
+    function logout() {
+      if (confirm("Do You Want to log out?")) {
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('detail');
+        window.location.href = 'LoginRR.html';
+      } else {
+        alert("Continue your work.");
+      }
+    }
+
+    // On page load
+    loadUserData();
+    loadScores();
+  </script>
+</body>
+</html>
