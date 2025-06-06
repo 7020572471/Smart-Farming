@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Welcome</title>
+  <style>
+    /* Base reset */
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    /* Container */
+    .container {
+      display: flex;
+      max-width: 900px;
+      width: 90%;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      min-height: 450px;
+    }
+
+    /* Left side */
+    .left {
+      flex: 1;
+      padding: 40px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .left h2 {
+      color: #0077cc;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      border-color: #0077cc;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0077cc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+
+    /* Right side */
+    .right {
+      flex: 1;
+      background: linear-gradient(135deg, #0077cc, #004d80);
+      color: #fff;
+      padding: 50px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .right h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .right p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .right, .left { padding: 30px 20px; }
+      .right { border-radius: 0 0 12px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="container">
+    <div class="left">
+      <h2>Login Here</h2>
+      <form id="loginForm" autocomplete="off">
+        <label for="loginUser">Username:</label>
+        <input type="text" id="loginUser" placeholder="Enter username" required />
+        
+        <label for="loginPass">Password:</label>
+        <input type="password" id="loginPass" placeholder="Enter password" required />
+        
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <div class="right">
+      <h2>Welcome to Our Website</h2>
+      <p>We’re glad you’re here! Please login with your credentials to continue exploring our services.</p>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+      const savedDetail = JSON.parse(localStorage.getItem('detail'));
+      if (savedDetail && user === savedDetail.username && pass === savedDetail.password) {
+        alert("Login successful!");
+        localStorage.setItem('loggedIn', true);
+        window.location.href = "Crop_Guide.html";
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+  </script>
+
+</body>
+</html>
