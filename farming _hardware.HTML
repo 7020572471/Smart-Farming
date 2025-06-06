@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sidebar Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefdf9;
+      color: #1e1e1e;
+      padding-bottom: 50px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff7ec;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+ 
+    .nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #2e7d32;
+    }
+
+    main {
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      background: #222;
+      padding: 10px 20px;
+    }
+
+    .topbar i {
+      font-size: 20px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+      background-color: #444;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .topbar span {
+      font-size: 18px;
+      color: #fefdf9;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      z-index: 1;
+      background: #333;
+      overflow-x: hidden;
+      padding-top: 10px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+      transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .profile {
+      text-align: center;
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile h2 {
+      margin-top: 10px;
+      font-size: 22px;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .social-icons a {
+      background-color: #1e2a34;
+      padding: 8px;
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    nav li {
+      padding: 8px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    nav li:hover {
+      color: #4fa3f7;
+    }
+
+    .nav-info {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 0.5px;
+      display: none;
+      padding-left: 15px;
+      width: 100%;
+    }
+
+    .nav-info.show {
+      display: block;
+    }
+
+    .exit-btn {
+      margin: 10px 20px;
+      padding: 6px 12px;
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 50px;
+      font-size: 14px;
+      position: fixed;
+      right: 10px;
+    }
+
+    .content {
+      margin-left: 0;
+      padding: 30px;
+    }
+
+.search-box {
+      width: 95%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: 2px solid #e0d9cd;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+       .product-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .product-card h2 {
+      margin-top: 12px;
+      color: #2e7d32;
+    }
+
+    .product-card p {
+      margin-top: 8px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .product-card .price {
+      margin-top: 8px;
+      font-size: 18px;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .product-card .price .original-price {
+      text-decoration: line-through;
+      color: #777;
+    }
+
+    .product-card .price .discount-price {
+      margin-left: 10px;
+    }
+
+    .product-card a {
+      display: inline-block;
+      margin-top: 10px;
+      background: #2e7d32;
+      padding: 10px 20px;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .product-card a:hover {
+      background: #4caf50;
+    }
+
+    .product-container {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top ka bar -->
+  <div class="topbar">
+    <i class="fas fa-ellipsis-v" id="toggle-sidebar"></i>
+    <span id="welcome">Welcome, <p id="sidebarName"></p></span>
+  </div>
+  <header>
+    <div class="logo">
+      🌱 <strong>Crop</strong><sup>4</sup>
+    </div>
+    <nav class="nav">
+      <a href="homepagefarm.html">Home</a>
+      <a href="Crop_Guide.html">Crop Guide</a>
+      <a href="Fertilizer_Tip.html">Fertilizer Tips</a>
+      <a href="farming _hardware.HTML">Farming Hardware</a>
+      <a href="Goverment_Stuff.html">Government Stuff</a>
+      <a href="crop_Quiz.html">Get Quizzical</a>
+      </nav>
+  </header> 
+
+  <!--  Sidebar ka data  -->
+  <div class="sidebar" id="sidebar">
+    <div class="profile">
+        <img id="sidebarProfileImg" src="https://via.placeholder.com/90" alt="Profile Image" />
+        <h2 id="sidebarName"></h2>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-x-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-skype"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <nav>
+      <ul>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-home"></i> Home</div>
+          <div class="nav-info">Welcome to the homepage section.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-user"></i> About</div>
+          <div class="nav-info"><p id="sidebarDetail"></p> <p id="sidebarMail"></p><p id="dateOfBirth"></p><p id="sidebarDetail2"></p></div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-file-alt"></i> Resume</div>
+          <div class="nav-info">Resumes are Not available.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fa fa-trophy" aria-hidden="true"></i> Score</div>
+          <div class="nav-info"><p id="scoreDisplay1" >Score not available</p><p id="scoreDisplay2" ></p><p id="scoreDisplay3" ></p><p id="scoreDisplay4" ></p></div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-cogs"></i> Services</div>
+          <div class="nav-info">These are the services I offer.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-layer-group"></i> Dropdown</div>
+          <div class="nav-info">Dropdown items go here.</div>
+        </li>
+        <li onclick="toggleInfo(this)">
+          <div><i class="fas fa-envelope"></i> Contact Details</div>
+          <div class="nav-info"><p id="sidebarMobile"></p> <p id="sidebarMail"></p><br>Get in touch via email or social.</div>
+        </li>
+        <li onclick="logout()">
+          <div><i class="fas fa-sign-out-alt"></i> Logout</div>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="exit-btn" id="exit-sidebar">Exit</button>
+  </div>
+  
+  <main class="content">
+    <h1>Crop Guide</h1>
+    <input type="text" placeholder="Search crops..." class="search-box" />
+
+    <div class="product-container">
+      <!-- Product 1: Pipes -->
+      <div class="product-card">
+        <img src="https://img.freepik.com/premium-photo/stack-white-pvc-pipes-ready-construction-clear-png-white-background_94628-90070.jpg" alt="Pipes" />
+        <h2>Pipes</h2>
+        <p>Durable PVC pipes for irrigation and water distribution on your farm.</p>
+        <div class="price">
+          <span class="original-price">₹ 1200</span>
+          <span class="discount-price">₹ 999</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 2: Fertilizer Sprayer -->
+      <div class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgoehwtx2tgYxaJIJ0W_f4cTiNfFfDxoCDsWFdaDpscE0Mo1havVd8tUVkTmTH73gPmP0&usqp=CAU" alt="Fertilizer Sprayer" />
+        <h2>Fertilizer Sprayer</h2>
+        <p>Easy-to-use sprayer for efficient fertilizer application on crops.</p>
+        <div class="price">
+          <span class="original-price">₹ 7599</span>
+          <span class="discount-price">₹ 2149</span> <!-- Discounted price -->
+        </div>
+        <a href="https://www.flipkart.com/raja-shakti-hand-operated-multi-purpose-sprayer-pump-16-l-backpack/p/itm60ba7e61beea3?pid=GSPHBACZAEPKPSBF&lid=LSTGSPHBACZAEPKPSBFG006DB&marketplace=FLIPKART">Buy Now</a>
+      </div>
+
+      <!-- Product 3: Tractor -->
+      <div class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmgqFBobS0sgYTwHEadhCyp_AJTO1IIsM8eA&s" alt="Tractor" />
+        <h2>Tractor</h2>
+        <p>Heavy-duty tractor for all your farming needs, from plowing to harvesting.</p>
+        <div class="price">
+          <span class="original-price">₹ 50000</span>
+          <span class="discount-price">₹ 45000</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 4: Plow -->
+      <div class="product-card">
+        <img src="https://media.istockphoto.com/id/463536659/photo/old-hand-plow.jpg?s=612x612&w=0&k=20&c=NA_J3I-Uy6x2zr7DXkLHBQc-vY6rA_J5ba2SWb59FY4=" alt="Plow" />
+        <h2>Plow</h2>
+        <p>Heavy-duty plow to prepare your soil for planting.</p>
+        <div class="price">
+          <span class="original-price">₹ 5000</span>
+          <span class="discount-price">₹ 4200</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 5: Irrigation System -->
+      <div class="product-card">
+        <img src="https://media.istockphoto.com/id/480284727/photo/irrigation-in-field-of-growing-potatoes.jpg?s=612x612&w=0&k=20&c=t_eNX9IUmKFbWYwJFZGY763zWys2CfEnu3SLX3myndA=" alt="Irrigation System" />
+        <h2>Irrigation System</h2>
+        <p>Water-saving irrigation system for efficient crop watering.</p>
+        <div class="price">
+          <span class="original-price">₹ 8000</span>
+          <span class="discount-price">₹ 7200</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 6: Seed Planter -->
+      <div class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFHUYYfxj9bSXf5WMmaDmVKnUnVV9qoGiOnIUtaNnZxBl2AbXDuoQIIgCKOURzd5e1hNc&usqp=CAU" alt="Seed Planter" />
+        <h2>Seed Planter</h2>
+        <p>Automatic seed planter for fast and precise planting.</p>
+        <div class="price">
+          <span class="original-price">₹ 30000</span>
+          <span class="discount-price">₹ 27000</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 7: Fertilizer Spreader -->
+      <div class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2DJd90F_D0jkh384yJ0wv4oFlL5e-FDHRYg&s" alt="Fertilizer Spreader" />
+        <h2>Fertilizer Spreader</h2>
+        <p>Precision fertilizer spreader for uniform distribution.</p>
+        <div class="price">
+          <span class="original-price">₹ 2500</span>
+          <span class="discount-price">₹ 2200</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 8: Harvester -->
+      <div class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7g4oO3TgIG8N_f9jcPnE8M0jGmsc4vGLguA&s" alt="Harvester" />
+        <h2>Harvester</h2>
+        <p>Efficient harvesting machine for crops like wheat, rice, and corn.</p>
+        <div class="price">
+          <span class="original-price">₹ 15,80000</span>
+          <span class="discount-price">₹ 12,75000</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 9: Trimmer -->
+      <div class="product-card">
+        <img src="https://m.media-amazon.com/images/I/51rUYIqxCEL._AC_UF1000,1000_QL80_.jpg" alt="Trimmer" />
+        <h2>Trimmer</h2>
+        <p>Perfect tool for trimming grass and weeds on your farm.</p>
+        <div class="price">
+          <span class="original-price">₹ 15000</span>
+          <span class="discount-price">₹ 13000</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 10: Greenhouse Kit -->
+      <div class="product-card">
+        <img src="https://www.shutterstock.com/image-vector/isometric-modern-greenhouse-icon-set-260nw-2041686689.jpg" alt="Greenhouse Kit" />
+        <h2>Greenhouse Kit</h2>
+        <p>Complete greenhouse kit for growing crops in controlled environments.</p>
+        <div class="price">
+          <span class="original-price">₹ 25000</span>
+          <span class="discount-price">₹ 23000</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+
+      <!-- Product 11: Soil Tester -->
+      <div class="product-card">
+        <img src="https://rukminim2.flixcart.com/image/832/832/xif0q/moisture-absorber/u/m/s/1-6-in-1-soil-meter-zomei-1-original-imahbcdgykpkeqsg.jpeg?q=70&crop=false" alt="Soil Tester" />
+        <h2>Soil Tester</h2>
+        <p>Easy-to-use soil tester for checking the health and nutrients of your soil.</p>
+        <div class="price">
+          <span class="original-price">₹ 2549</span>
+          <span class="discount-price">₹ 1614</span> <!-- Discounted price -->
+        </div>
+        <a href="https://www.flipkart.com/zomei-absorber-refill-moisture/p/itm86191c63a65f0?pid=MOAHBCDGSSZTQWSS&lid=LSTMOAHBCDGSSZTQWSS2QG4YZ&marketplace=FLIPKART&q=SOIL+TESTER&store=search.flipkart.com&srno=s_1_1&otracker=search&otracker1=search&fm=Search&iid=en_WqlVsmmcOLMo2DPDWHYGgO_a_BP_dTgFD5zIxijkeXMdxs1W8KUJACjJPLCGEvbHY_IkYOYN_dXxd6MoOUmL8Q%3D%3D&ppt=sp&ppn=sp&ssid=gukil1wfcw0000001748717390674&qH=0fa68c88f77f3033">Buy Now</a>
+      </div>
+
+      <!-- Product 12: Solar Pump -->
+      <div class="product-card">
+        <img src="https://www.shutterstock.com/image-vector/solar-cell-water-pump-smart-260nw-1754317760.jpg" alt="Solar Pump" />
+        <h2>Solar Pump</h2>
+        <p>Environmentally friendly solar-powered water pump for irrigation.</p>
+        <div class="price">
+          <span class="original-price">₹ 70000</span>
+          <span class="discount-price">₹ 65000</span> <!-- Discounted price -->
+        </div>
+        <a href="#">Buy Now</a>
+      </div>
+    </div>
+    
+  </main>
+
+
+  <script>
+    function loadUserData() {
+      const loggedIn = localStorage.getItem('loggedIn');
+      const detail = JSON.parse(localStorage.getItem('detail'));
+
+      if (loggedIn !== 'true' || !detail) {
+        alert("No user session found. Redirecting to login.");
+        window.location.href = "LoginRR.html";
+        return;
+      }
+
+      const fullName = "Hi " + detail.fname + " " + detail.lname;
+      const welcomeName = "Welcome, " + fullName;
+
+      document.getElementById('sidebarName').textContent = fullName;
+      document.getElementById('welcome').textContent = welcomeName;
+      document.getElementById('sidebarDetail').textContent = "Name: " + detail.fname + " " + detail.lname;
+      document.getElementById('sidebarDetail2').textContent = "Mobile Number : " + detail.mobile;
+      document.getElementById('dateOfBirth').textContent = "Date Of Birth : " + detail.dob;
+      document.getElementById('sidebarMail').textContent = "Email ID : " + detail.email;
+      document.getElementById('sidebarMobile').textContent = "Mobile Number : " + detail.mobile || "Not Provided";
+      document.getElementById('sidebarProfileImg').src = detail.profileImage || "https://via.placeholder.com/90";
+    }
+
+    // Sidebar toggle logic
+    document.getElementById("toggle-sidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.add("active");
+    });
+
+    document.getElementById("exit-sidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.remove("active");
+    });
+
+    // Toggle nav info
+    function toggleInfo(listItem) {
+      const allInfo = document.querySelectorAll(".nav-info");
+      allInfo.forEach(info => {
+        if (info !== listItem.querySelector(".nav-info")) {
+          info.classList.remove("show");
+        }
+      });
+
+      const info = listItem.querySelector(".nav-info");
+      info.classList.toggle("show");
+    }
+
+    function loadScores() {
+      for (let i = 1; i <= 4; i++) {
+        const score = localStorage.getItem('testScore' + i);
+        const scoreElement = document.getElementById('scoreDisplay' + i);
+        if (score !== null && scoreElement) {
+          scoreElement.textContent = `Last Test Score: ${score} out of 24`;
+        }
+      }
+    }
+
+    function logout() {
+      if (confirm("Do You Want to log out?")) {
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('detail');
+        window.location.href = 'LoginRR.html';
+      } else {
+        alert("Continue your work.");
+      }
+    }
+
+    // On page load
+    loadUserData();
+    loadScores();
+  </script>
+</body>
+</html>
